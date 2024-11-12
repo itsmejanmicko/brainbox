@@ -52,5 +52,22 @@ export const productServices = {
         }catch(error){
             console.error(error)
         }
+    },
+    deleteCart:async(id:string)=>{
+        try{
+            const response = await fetch(`http://localhost:5000/delete`, {
+                method:"DELETE",
+                credentials:"include",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify({id})
+            })
+            const data = response.json();
+            console.log(data)
+            return data
+        }catch(error){
+            throw error;
+        }
     }
 };

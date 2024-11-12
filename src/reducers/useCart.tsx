@@ -33,7 +33,7 @@ export function useCart() {
                 setError("Failed to load products.");
                 setLoading(false);
             });
-    }, [cartItems]);
+    }, []);
 
     return { cartItems, loading, error };
 }

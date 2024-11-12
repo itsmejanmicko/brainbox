@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useProducts } from "../../reducers/userProducts";
+import {productServices} from "../../services/productServices.ts";
+import {toast} from "sonner";
 
 export default function ProductPage() {
     const navigate = useNavigate();
@@ -8,7 +10,16 @@ export default function ProductPage() {
     function handleView(id: string) {
         navigate(`/product/get/${id}`);
     }
-
+    const handleAddtoCart = async (id:string)=>{
+        try{
+            const response = await productServices.addToCart(id)
+            if(response.success){
+                toast.success("Product Added");
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
     return (
         <div className="bg-background min-h-screen p-6 font-mono ">
             <header className="mb-8 text-center">
@@ -36,7 +47,9 @@ export default function ProductPage() {
                                 <p className="text-muted mt-2">{product.shortDescription}</p>
                                 <p className="text-primary font-bold mt-4">₱{Number(product.price).toFixed(2)}</p>
                                 <div className="flex gap-x-4 mt-4">
-                                    <button className="bg-primary text-white rounded py-2 px-4 hover:bg-primary/80 focus:ring ring-primary">
+                                    <button
+                                         onClick={()=>handleAddtoCart(product._id)}
+                                        className="bg-primary text-white rounded py-2 px-4 hover:bg-primary/80 focus:ring ring-primary">
                                         Add to Cart
                                     </button>
                                     <button

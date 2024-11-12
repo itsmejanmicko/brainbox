@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Heart, ShoppingCart } from 'lucide-react';
+import {ShoppingCart } from 'lucide-react';
 import {useParams} from 'react-router-dom';
+import {productServices} from "../../services/productServices.ts";
+import {toast} from "sonner";
 
 const productImages = '/placeholder.svg?height=600&width=600';
 
@@ -55,6 +57,21 @@ export default function LearnPage() {
     if (error) {
         return <div>Error: {error}</div>;
     }
+    const handleAddtoCart = async (productId: string | undefined) => {
+        if (!productId) {
+            console.log("Product ID is undefined");
+            return;
+        }
+        try {
+            const response = await productServices.addToCart(productId);
+            if (response.success) {
+                toast.success("Product Added");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-mono">
@@ -96,7 +113,9 @@ export default function LearnPage() {
                             </div>
 
                             <div className="mt-8 space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
-                                <button className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                                <button
+                                    onClick={()=>handleAddtoCart(product?._id)}
+                                    className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                                     <ShoppingCart className="inline-block w-5 h-5 mr-2" />
                                     Add to Cart
                                 </button>
