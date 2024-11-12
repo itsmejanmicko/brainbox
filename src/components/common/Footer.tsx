@@ -10,7 +10,6 @@ export default function Footer() {
       </p>
       <nav className="flex gap-4">
         <a href="/terms" className="text-sm text-muted-foreground hover:underline underline-offset-4">{constant.FOOTER.TERMS}</a>
-        <a href="/privacy" className="text-sm text-muted-foreground hover:underline underline-offset-4">{constant.FOOTER.PRIVACRY}</a>
         <a href="/contact" className="text-sm text-muted-foreground hover:underline underline-offset-4">{constant.FOOTER.CONTACT}</a>
       </nav>
     </div>

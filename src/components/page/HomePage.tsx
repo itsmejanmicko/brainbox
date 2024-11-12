@@ -1,5 +1,5 @@
 
-import Footer from "../common/Footer";
+
 import { constant } from "../../config/constant";
 import ProductsSection from "../section/ProductsSection";
 import brain from '../../assets/brain.jpg'
@@ -26,8 +26,8 @@ const HomePage = () => {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <a href="/products" className="btn btn-primary bg-primary text-white px-5 py-4 hover:bg-primary/80">{constant.NAV_LINK.SHOP_NOW}</a>
-                  <a href="/categories" className="btn btn-secondary py-4">{constant.NAV_LINK.SHOP_NOW}</a>
+                  <a href="/product" className="btn btn-primary bg-primary text-white px-5 py-4 hover:bg-primary/80">{constant.NAV_LINK.SHOP_NOW}</a>
+                  <a href="/categories" className="btn btn-secondary py-4">{constant.NAV_LINK.CATEGORIES}</a>
                 </div>
               </div>
             </div>

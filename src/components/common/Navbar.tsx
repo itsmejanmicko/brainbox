@@ -1,20 +1,27 @@
-import { Menu, Search, ShoppingCart, X } from 'lucide-react'
-import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import { constant } from '../../config/constant'
+// Navbar.tsx
+import { Menu, Search, ShoppingCart, X } from 'lucide-react';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { constant } from '../../config/constant';
+import CartSection from '../section/CartSection';
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const location = useLocation()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const location = useLocation();
+
+  const handleOpenCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-  const isActive = (path:string) => location.pathname === path
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ">
         <div className="container flex items-center justify-between h-16 gap-4">
           <a href="/" className="flex items-center space-x-2">
             <ShoppingCart className="h-6 w-6" />
@@ -58,7 +65,9 @@ export default function Navbar() {
                 <span className="sr-only">Search</span>
               </button>
             </form>
-            <button className="icon-button">
+            <button
+                onClick={handleOpenCart}
+                className="icon-button">
               <ShoppingCart className="h-6 w-6" />
               <span className="sr-only">Open cart</span>
             </button>
@@ -109,6 +118,7 @@ export default function Navbar() {
               </div>
             </nav>
         )}
+        <CartSection isCartOpen={isCartOpen} handleOpenCart={handleOpenCart} />
       </header>
-  )
+  );
 }

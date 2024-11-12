@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Heart, ShoppingCart, Info } from 'lucide-react';
+import { Heart, ShoppingCart } from 'lucide-react';
 import {useParams} from 'react-router-dom';
 
 const productImages = '/placeholder.svg?height=600&width=600';
@@ -9,18 +9,19 @@ interface Product {
     name: string;
     price: string;
     imageUrl: string;
-    description?: string;
+    descriptions: [];
+    shortDescription:string,
+    status:string,
 }
 
 export default function LearnPage() {
       const {id} = useParams();
-    const [isFavorite, setIsFavorite] = useState(false);
-    const [product, setProduct] = useState<Product | null>(null); // State to store product data
-    const [loading, setLoading] = useState(true); // State for loading status
-    const [error, setError] = useState<string | null>(null); // State for error handling
+        const [product, setProduct] = useState<Product | null>(null);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState<string | null>(null);
+
 
     useEffect(() => {
-        // Make the GET request to fetch product details
         const fetchProduct = async () => {
             try {
                 const response = await fetch(`http://localhost:5000/product/get/${id}`, {
@@ -35,8 +36,8 @@ export default function LearnPage() {
                 }
 
                 const data: Product = await response.json();
-                console.log(data)
                 setProduct(data);
+                console.log(data)
                 setLoading(false);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'An unexpected error occurred');
@@ -48,15 +49,15 @@ export default function LearnPage() {
     }, [id]);
 
     if (loading) {
-        return <div>Loading...</div>; // Loading state
+        return <div>Loading...</div>;
     }
 
     if (error) {
-        return <div>Error: {error}</div>; // Error state
+        return <div>Error: {error}</div>;
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-mono">
             <div className="max-w-7xl mx-auto">
                 <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
                     <div className="lg:flex">
@@ -74,29 +75,21 @@ export default function LearnPage() {
                             <div className="flex justify-between items-start">
                                 <div>
                                     <p className="text-sm font-semibold text-indigo-600 uppercase tracking-wide">
-                                        New Arrival
+                                        {product?.status}
                                     </p>
                                     <h1 className="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
                                         {product?.name || 'Premium Headphones'}
                                     </h1>
                                 </div>
-                                <button
-                                    onClick={() => setIsFavorite(!isFavorite)}
-                                    className={`p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
-                                        isFavorite ? 'text-red-500' : 'text-gray-400'
-                                    }`}
-                                >
-                                    <Heart className={`w-6 h-6 ${isFavorite ? 'fill-current' : ''}`} />
-                                </button>
                             </div>
                             <p className="mt-6 text-gray-500 text-lg leading-relaxed">
-                                {product?.description || 'Experience crystal-clear audio with our latest noise-cancelling headphones.'}
+                                {product?.shortDescription || 'Experience crystal-clear audio with our latest noise-cancelling headphones.'}
                             </p>
 
                             <div className="mt-8 flex items-center justify-between">
                                 <div>
                                     <span className="text-4xl font-bold text-gray-900">
-                                        ₱{product?.price || 'N/A'}
+                                        ₱{Number(product?.price).toFixed(2) || 'N/A'}
                                     </span>
                                     <span className="ml-2 text-lg text-gray-500">Peso</span>
                                 </div>
@@ -113,10 +106,9 @@ export default function LearnPage() {
                                 <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
                                 <div className="mt-4 prose prose-sm text-gray-500">
                                     <ul className="list-disc pl-5 space-y-2">
-                                        <li>Active Noise Cancellation</li>
-                                        <li>40-hour battery life</li>
-                                        <li>Bluetooth 5.0 connectivity</li>
-                                        <li>Comfortable over-ear design</li>
+                                        {product?.descriptions.map((desc,index)=>(
+                                            <li key={index}>{desc}</li>
+                                        ))}
                                     </ul>
                                 </div>
                             </div>
