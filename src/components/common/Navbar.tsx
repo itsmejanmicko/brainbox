@@ -118,7 +118,7 @@ export default function Navbar() {
               </div>
             </nav>
         )}
-        <CartSection isCartOpen={isCartOpen} handleOpenCart={handleOpenCart} />
+        <CartSection isCartOpen={isCartOpen} handleOpenCart={handleOpenCart} userName={''} />
       </header>
   );
 }
