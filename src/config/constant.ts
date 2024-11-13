@@ -2,7 +2,7 @@ import v0 from '../assets/v0logo.png'
 import me from '../assets/me.jpg'
 
 export const constant = {
-     API_URI:'http://localhost:5000',
+     API_URI:'https://brainbox-api.vercel.app',
      BACKGROUND:`    Here’s a funny and quirky background for Brainbox:
      "Introducing Brainbox – the world’s first brain extension service that allows you to upgrade your mind from 1GB to a whopping 1TB! Ever feel like your brain’s storage is running low? Can’t remember where you left your keys? Well, worry no more! With Brainbox, you can supercharge your mental capacity with the latest in brain-tech upgrades. Whether you’re storing new trivia, creative ideas, or that one cat video you can’t stop watching, we’ve got you covered.
       Powered by Node.js on the backend (because even brains need a solid foundation), and React/Vite on the frontend for a sleek, lightning-fast user experience, Brainbox makes upgrading your mind as easy as clicking a button. And for those wondering, we do offer premium upgrades with a built-in AI assistant who’s always there to remind you that you really shouldn’t have eaten that extra slice of pizza. So go ahead, give your brain the storage it deserves – no more mental clutter or forgotten passwords. Brainbox: Where the only thing that gets limited is your imagination. 😎🧠🚀"
