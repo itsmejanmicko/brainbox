@@ -14,7 +14,8 @@ export function useCart() {
     const [cartItems, setCartItems] = useState<cartTypes[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-
+    
+   
     useEffect(() => {
         productServices.getMyCart()
             .then((response: cartTypes) => {
@@ -22,7 +23,13 @@ export function useCart() {
 
                 if (Array.isArray(productsArray)) {
                     setCartItems(productsArray);
+                    if(productsArray[0]==='No Cart found'){
+                        setCartItems([]); 
+                    }else{
+                        setCartItems(productsArray);
+                    }
                 } else {
+                    setCartItems([])
                     setError("Unexpected data format.");
                 }
 
@@ -30,6 +37,7 @@ export function useCart() {
             })
             .catch((err) => {
                 console.error(err);
+                setCartItems([])
                 setError("Failed to load products.");
                 setLoading(false);
             });
